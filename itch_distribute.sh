@@ -69,7 +69,7 @@ upload_with_butler() {
     local channel_name=$2
 
     echo "Uploading $file_path to channel $channel_name..."
-    butler push "$file_path" "$ITCHIO_USERNAME/$ITCHIO_PROJECT_NAME:$channel_name"
+    butler push "$file_path" "$ITCHIO_USERNAME/$ITCHIO_PROJECT_NAME:$channel_name" --userversion "$APP_VERSION"
 }
 
 # Check if an OS should be excluded
@@ -94,12 +94,12 @@ echo "======================="
 find "$BASE_DIRECTORY" -type f \( -name "*.msi" -o -name "*.dmg" -o -name "*.pkg.tar.gz" -o -name "*.rpm" -o -name "*.deb" -o -name "*.AppImage" \) | while read file_path; do
     case "$file_path" in
         *x64_en-US.msi) os="windows" arch="x64";;
-        *-arm64.dmg) os="macOS" arch="arm64";;
+        *-arm64.dmg) os="macOS" arch="AppleSilicon";;
         *-x64.dmg) os="macOS" arch="x64";;
-        *-x86_64.pkg.tar.gz) os="arch-linux" arch="x86_64";;
-        *x86_64.rpm) os="fedora" arch="x86_64";;
-        *_amd64.deb) os="debian" arch="amd64";;
-        *.AppImage) os="linux" arch="universal";;
+        *-x86_64.pkg.tar.gz) os="linux-arch" arch="x64";;
+        *x86_64.rpm) os="linux-fedora" arch="x64";;
+        *_amd64.deb) os="linux-debian" arch="x64";;
+        *.AppImage) os="linux" arch="x64";;
         *) echo "Unknown file format: $file_path" && continue;;
     esac
 
@@ -109,8 +109,8 @@ find "$BASE_DIRECTORY" -type f \( -name "*.msi" -o -name "*.dmg" -o -name "*.pkg
         continue
     fi
 
-    # Construct the channel name using OS, architecture, and app version
-    channel_name="${os}-${arch}-${APP_VERSION}"
+    # Construct the channel name using OS, architecture
+    channel_name="${os}-${arch}"
 
     # Upload the file
     upload_with_butler "$file_path" "$channel_name"
