@@ -64,7 +64,7 @@ should_exclude() {
 
 # Find and display files to process
 echo "Files to be processed:"
-find "$BASE_DIRECTORY" -type f \( -name "*.msi" -o -name "*.dmg" -o -name "*.pkg.tar.gz" -o -name "*.rpm" -o -name "*.deb" -o -name "*.AppImage" \) | while read file_path; do
+find "$BASE_DIRECTORY" -type f \( -name "*.msi" -o -name "*.dmg" -o -name "*.pkg.tar.*" -o -name "*.rpm" -o -name "*.deb" -o -name "*.AppImage" \) | while read file_path; do
     echo "$file_path"
 done
 echo "======================="
