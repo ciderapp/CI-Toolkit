@@ -17,15 +17,9 @@ ln -s /usr/lib/jellyfin-ffmpeg/ffmpeg /usr/bin/ffmpeg
 # Install i965 driver (default gpu driver, uncomment if you have <9th gen CPU)
 # apt install i965-va-driver-shaders
 
-if uname -a | grep -q "Unraid"; then
-  # Commands to run if "Unraid" is found in the kernel name
-  echo "Unraid kernel detected. Running specific commands..."
-  wget -qO - https://repositories.intel.com/graphics/intel-graphics.key | apt-key add -
-  echo 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main' >> /etc/apt/sources.list
-  apt update
-  apt install -y intel-media-va-driver-non-free
-else
-  echo "Unraid kernel not detected. Skipping specific commands..."
-fi
+wget -qO - https://repositories.intel.com/graphics/intel-graphics.key | apt-key add -
+echo 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main' >> /etc/apt/sources.list
+apt update
+apt install -y intel-media-va-driver-non-free
 
 apt --fix-broken install -y
