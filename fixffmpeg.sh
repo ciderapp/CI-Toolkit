@@ -7,6 +7,7 @@
 # Install debug tools / dependencies
 apt update
 apt install -y wget gnupg vainfo gpg-agent libllvm11
+apt remove -y ffmpeg
 
 # Exchange the default ffmpeg deb with the one from HTTP and install it, link it to /usr/bin/ffmpeg
 wget https://cdn.cider.sh/jellyfin-ffmpeg6_6.0.1-6-bullseye_amd64.deb
