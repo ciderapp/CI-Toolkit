@@ -17,10 +17,15 @@ ln -s /usr/lib/jellyfin-ffmpeg/ffmpeg /usr/bin/ffmpeg
 # Install i965 driver (default gpu driver, uncomment if you have <9th gen CPU)
 # apt install i965-va-driver-shaders
 
-# Install iHD driver (iHD quicksync driver, better performance cf https://www.reddit.com/r/jellyfin/comments/r5pur8/best_transcoding_settings_for_synology_ds920/ only if you have a >9th gen CPU)
-wget -qO - https://repositories.intel.com/graphics/intel-graphics.key | apt-key add -
-echo 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main' >> /etc/apt/sources.list
-apt update
-apt install -y intel-media-va-driver-non-free
+if uname -a | grep -q "Unraid"; then
+  # Commands to run if "Unraid" is found in the kernel name
+  echo "Unraid kernel detected. Running specific commands..."
+  wget -qO - https://repositories.intel.com/graphics/intel-graphics.key | apt-key add -
+  echo 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main' >> /etc/apt/sources.list
+  apt update
+  apt install -y intel-media-va-driver-non-free
+else
+  echo "Unraid kernel not detected. Skipping specific commands..."
+fi
 
 apt --fix-broken install -y
