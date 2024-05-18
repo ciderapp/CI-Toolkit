@@ -23,4 +23,4 @@ echo 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main
 apt update
 apt install -y intel-media-va-driver-non-free
 
-apt --fix-missing install -y
+apt --fix-broken install -y
