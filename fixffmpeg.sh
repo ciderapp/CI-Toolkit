@@ -11,7 +11,6 @@ apt install -y wget gnupg vainfo gpg-agent libllvm11
 # Exchange the default ffmpeg deb with the one from HTTP and install it, link it to /usr/bin/ffmpeg
 wget https://cdn.cider.sh/jellyfin-ffmpeg6_6.0.1-6-bullseye_amd64.deb
 dpkg -i jellyfin-ffmpeg6_6.0.1-6-bullseye_amd64.deb
-apt --fix-missing install
 ln -s /usr/lib/jellyfin-ffmpeg/ffmpeg /usr/bin/ffmpeg
 
 # Install i965 driver (default gpu driver, uncomment if you have <9th gen CPU)
@@ -23,3 +22,4 @@ echo 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main
 apt update
 apt install -y intel-media-va-driver-non-free
 
+apt --fix-missing install -y
