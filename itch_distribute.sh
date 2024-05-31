@@ -76,9 +76,9 @@ normalize_file_name() {
     local arch=$3
     local extension="${file_path##*.}"
 
-    # Special handling for .pkg.tar.gz files
-    if [[ "$file_path" == *.pkg.tar.gz ]]; then
-        extension="pkg.tar.gz"
+    # Special handling for .pkg.tar.zst files
+    if [[ "$file_path" == *.pkg.tar.zst ]]; then
+        extension="pkg.tar.zst"
     fi
 
     # Adjust the echo statement according to your naming scheme, including OS and arch if needed
@@ -103,7 +103,7 @@ upload_with_butler() {
 }
 
 # Start processing and uploading files
-find "$BASE_DIRECTORY" -type f \( -name "*.msi" -o -name "*.dmg" -o -name "*.pkg.tar.gz" -o -name "*.rpm" -o -name "*.deb" -o -name "*.AppImage" \) | while read file_path; do
+find "$BASE_DIRECTORY" -type f \( -name "*.msi" -o -name "*.dmg" -o -name "*.pkg.tar.*" -o -name "*.rpm" -o -name "*.deb" -o -name "*.AppImage" \) | while read file_path; do
     original_file_path="$file_path" # Initialize original file path
     
     # Determine OS and architecture based on the file name
@@ -111,7 +111,7 @@ find "$BASE_DIRECTORY" -type f \( -name "*.msi" -o -name "*.dmg" -o -name "*.pkg
         *x64_en-US.msi) os="windows" arch="x64" ;;
         *-arm64.dmg) os="macOS" arch="arm64" ;;
         *-x64.dmg) os="macOS" arch="x64" ;;
-        *-x86_64.pkg.tar.gz) os="linux-arch" arch="x64" ;;
+        *-x86_64.pkg.tar.*) os="linux-arch" arch="x64" ;;
         *x86_64.rpm) os="linux-fedora" arch="x64" ;;
         *_amd64.deb) os="linux-debian" arch="x64" ;;
         *.AppImage) os="linux-appimage" arch="x64" ;;
